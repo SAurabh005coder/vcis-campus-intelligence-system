@@ -1,9 +1,11 @@
+from app.routers.students import router as students_router
 from fastapi import FastAPI
 from sqlalchemy import text
 
 from app.database import engine
 
 app = FastAPI()
+app.include_router(students_router)
 
 
 @app.get("/health")
