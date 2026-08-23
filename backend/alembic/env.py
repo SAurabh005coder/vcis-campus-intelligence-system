@@ -9,6 +9,7 @@ from alembic import context
 
 from app.base import Base
 from app.models.student import Student
+from app.models.user import User
 
 load_dotenv()
 

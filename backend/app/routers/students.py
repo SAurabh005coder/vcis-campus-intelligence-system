@@ -5,6 +5,9 @@ from sqlalchemy.orm import Session
 from app.database import get_db
 from app.models.student import Student
 from app.schemas.student import StudentCreate, StudentResponse ,StudentUpdate
+from app.core.authorization import require_roles
+from app.core.dependencies import get_current_user
+from app.models.user import User, UserRole
 
 router = APIRouter(
     prefix="/api/v1/students",
@@ -20,6 +23,9 @@ router = APIRouter(
 def create_student(
     student: StudentCreate,
     db: Session = Depends(get_db),
+    current_user=Depends(
+        require_roles(UserRole.ADMIN)
+    ),
 ):
     db_student = Student(
         name=student.name,
@@ -45,6 +51,14 @@ def create_student(
 @router.get("/", response_model=list[StudentResponse])
 def get_students(
     db: Session = Depends(get_db),
+    current_user=Depends(
+        require_roles(
+            UserRole.STUDENT,
+            UserRole.FACULTY,
+            UserRole.HOD,
+            UserRole.ADMIN,
+        )
+    ),
 ):
     students = db.query(Student).all()
 
@@ -54,6 +68,14 @@ def get_students(
 def get_student(
     student_id: int,
     db: Session = Depends(get_db),
+    current_user=Depends(
+        require_roles(
+            UserRole.STUDENT,
+            UserRole.FACULTY,
+            UserRole.HOD,
+            UserRole.ADMIN,
+        )
+    ),
 ):
     student = db.query(Student).filter(Student.id == student_id).first()
 
@@ -70,6 +92,9 @@ def update_student(
     student_id: int,
     student_data: StudentUpdate,
     db: Session = Depends(get_db),
+    current_user=Depends(
+        require_roles(UserRole.ADMIN)
+    ),
 ):
     student = db.query(Student).filter(Student.id == student_id).first()
 
@@ -99,6 +124,9 @@ def update_student(
 def delete_student(
     student_id: int,
     db: Session = Depends(get_db),
+    current_user=Depends(
+        require_roles(UserRole.ADMIN)
+    ),
 ):
     student = db.query(Student).filter(Student.id == student_id).first()
 
