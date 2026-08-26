@@ -9,3 +9,13 @@ and actionable recommendations.
 
 # to run backend  -  python -m uvicorn app.main:app --reload
 # to test api  -   http://127.0.0.1:8000/docs
+
+Email: admin@example.com
+Password: AdminPassword123!
+Role: admin
+
+
+
+Email:    student1@example.com
+Password: TestPassword123!
+Role:     student

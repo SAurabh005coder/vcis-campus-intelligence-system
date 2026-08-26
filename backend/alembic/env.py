@@ -1,7 +1,8 @@
 import os
+from app.models.department import Department
 from logging.config import fileConfig
 from dotenv import load_dotenv
-
+from app.models.faculty import Faculty
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
