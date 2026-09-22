@@ -17,6 +17,7 @@ from app.base import Base
 from app.models.student import Student
 from app.models.user import User
 from app.models.intervention import Intervention
+from app.database import normalize_database_url
 
 load_dotenv()
 
@@ -51,6 +52,8 @@ def run_migrations_online() -> None:
 
     if not database_url:
         raise RuntimeError("DATABASE_URL is not set")
+
+    database_url = normalize_database_url(database_url)
 
     connectable = engine_from_config(
         {"sqlalchemy.url": database_url},

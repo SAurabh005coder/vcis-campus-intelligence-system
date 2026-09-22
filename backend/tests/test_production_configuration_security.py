@@ -200,6 +200,26 @@ class TestProductionConfigurationSecurity(unittest.TestCase):
         self.assertTrue((backend_dir / "app").is_dir())
         self.assertTrue((backend_dir / "app" / "database.py").is_file())
 
+    def test_normalize_database_url_postgresql(self):
+        """Standard postgresql:// and postgres:// URLs are normalized to postgresql+psycopg://."""
+        from app.database import normalize_database_url
+        self.assertEqual(
+            normalize_database_url("postgresql://user:pass@host:5432/db"),
+            "postgresql+psycopg://user:pass@host:5432/db",
+        )
+        self.assertEqual(
+            normalize_database_url("postgres://user:pass@host:5432/db"),
+            "postgresql+psycopg://user:pass@host:5432/db",
+        )
+        self.assertEqual(
+            normalize_database_url("postgresql+psycopg://user:pass@host:5432/db"),
+            "postgresql+psycopg://user:pass@host:5432/db",
+        )
+        self.assertEqual(
+            normalize_database_url("sqlite:///./test.db"),
+            "sqlite:///./test.db",
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
