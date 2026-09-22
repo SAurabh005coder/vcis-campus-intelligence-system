@@ -5,12 +5,18 @@ from dotenv import load_dotenv
 from app.models.faculty import Faculty
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
+from app.models.course import Course
+from app.models.subject import Subject
+from app.models.enrollment import Enrollment
+from app.models.attendance import Attendance
+from app.models.assessment import Assessment
 
 from alembic import context
 
 from app.base import Base
 from app.models.student import Student
 from app.models.user import User
+from app.models.intervention import Intervention
 
 load_dotenv()
 

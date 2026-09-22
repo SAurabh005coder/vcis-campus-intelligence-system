@@ -1,0 +1,1750 @@
+/**
+ * VCIS — Virtual Campus Intelligence System
+ * Modern Academic Intelligence Design System
+ *
+ * Visual personality: Clean, modern, academic, professional, calm, data-focused.
+ * Light, crisp foundation with authoritative contrast, subtle borders, and accessible typography.
+ */
+
+/* ==========================================================================
+   1. DESIGN TOKENS & CSS VARIABLES (LIGHT ACADEMIC INTELLIGENCE FOUNDATION)
+   ========================================================================== */
+
+:root {
+  /* --- Color Foundation: Light Academic Intelligence --- */
+  --vcis-bg: #f8fafc;              /* Soft off-white / very light cool slate */
+  --vcis-bg-elevated: #f1f5f9;     /* Light slate neutral */
+  --vcis-surface: #ffffff;         /* Crisp white primary surface */
+  --vcis-surface-soft: #f8fafc;    /* Very light blue-gray secondary surface */
+  --vcis-surface-raised: #f1f5f9;  /* Raised neutral surface */
+  --vcis-surface-hover: #f1f5f9;   /* Hover state for rows/cards */
+  --vcis-surface-active: #e2e8f0;  /* Active state */
+  --vcis-surface-muted: #f1f5f9;   /* Muted container surface */
+
+  /* --- Borders --- */
+  --vcis-border: #e2e8f0;          /* Very light cool gray */
+  --vcis-border-strong: #cbd5e1;   /* Medium slate border */
+  --vcis-border-subtle: #f1f5f9;   /* Subtle divider border */
+  --vcis-border-focus: #2563eb;    /* Focused outline */
+
+  /* --- Text & Content --- */
+  --vcis-text: #0f172a;            /* Deep charcoal / navy primary text */
+  --vcis-text-primary: #0f172a;    /* Primary text alias */
+  --vcis-text-secondary: #475569;  /* Muted slate gray */
+  --vcis-text-muted: #64748b;      /* Supporting metadata gray */
+  --vcis-text-inverse: #ffffff;    /* Pure white on dark contrast */
+
+  /* --- Brand & Action (Cobalt & Cyan) --- */
+  --vcis-primary: #2563eb;         /* Cobalt blue */
+  --vcis-primary-hover: #1d4ed8;
+  --vcis-primary-active: #1e40af;
+  --vcis-primary-soft: rgba(37, 99, 235, 0.08);
+  --vcis-primary-border: rgba(37, 99, 235, 0.25);
+  --vcis-primary-text: #1d4ed8;
+
+  --vcis-accent: #0284c7;          /* Refined subtle cyan / teal */
+  --vcis-accent-hover: #0369a1;
+  --vcis-accent-soft: rgba(2, 132, 199, 0.08);
+
+  /* --- Status & Feedback Tiers (Subtle Tinted Backgrounds with Readable Text) --- */
+  --vcis-success: #059669;
+  --vcis-success-hover: #047857;
+  --vcis-success-soft: #ecfdf5;
+  --vcis-success-border: #a7f3d0;
+  --vcis-success-text: #065f46;
+  --vcis-success-bg: #ecfdf5;
+
+  --vcis-warning: #d97706;
+  --vcis-warning-hover: #b45309;
+  --vcis-warning-soft: #fffbeb;
+  --vcis-warning-border: #fde68a;
+  --vcis-warning-text: #92400e;
+  --vcis-warning-bg: #fffbeb;
+
+  --vcis-danger: #dc2626;
+  --vcis-danger-hover: #b91c1c;
+  --vcis-danger-soft: #fef2f2;
+  --vcis-danger-border: #fecaca;
+  --vcis-danger-text: #991b1b;
+  --vcis-danger-bg: #fef2f2;
+
+  --vcis-info: #0284c7;
+  --vcis-info-hover: #0369a1;
+  --vcis-info-soft: #f0f9ff;
+  --vcis-info-border: #bae6fd;
+  --vcis-info-text: #075985;
+
+  --vcis-neutral: #64748b;
+  --vcis-neutral-soft: #f1f5f9;
+  --vcis-neutral-border: #e2e8f0;
+  --vcis-neutral-text: #334155;
+
+  /* --- Canonical VCIS Semantic Status Tokens --- */
+  --vcis-status-normal-bg: #ecfdf5;
+  --vcis-status-normal-text: #065f46;
+  --vcis-status-normal-border: #a7f3d0;
+
+  --vcis-status-monitor-bg: #fffbeb;
+  --vcis-status-monitor-text: #92400e;
+  --vcis-status-monitor-border: #fde68a;
+
+  --vcis-status-intervention-bg: #fef2f2;
+  --vcis-status-intervention-text: #991b1b;
+  --vcis-status-intervention-border: #fecaca;
+
+  /* --- Typography --- */
+  --vcis-font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --vcis-font-mono: 'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  --vcis-font-size-xs: 0.75rem;    /* 12px */
+  --vcis-font-size-sm: 0.8125rem;  /* 13px */
+  --vcis-font-size-base: 0.9375rem;/* 15px */
+  --vcis-font-size-md: 1.0625rem;  /* 17px */
+  --vcis-font-size-lg: 1.25rem;    /* 20px */
+  --vcis-font-size-xl: 1.5rem;     /* 24px */
+  --vcis-font-size-2xl: 1.875rem;  /* 30px */
+  --vcis-font-size-3xl: 2.25rem;   /* 36px */
+
+  /* Legacy Font Aliases */
+  --font-xs: var(--vcis-font-size-xs);
+  --font-sm: var(--vcis-font-size-sm);
+  --font-base: var(--vcis-font-size-base);
+  --font-md: var(--vcis-font-size-md);
+  --font-lg: var(--vcis-font-size-lg);
+  --font-xl: var(--vcis-font-size-xl);
+  --font-2xl: var(--vcis-font-size-2xl);
+  --font-3xl: var(--vcis-font-size-3xl);
+
+  --vcis-font-weight-regular: 400;
+  --vcis-font-weight-medium: 500;
+  --vcis-font-weight-semibold: 600;
+  --vcis-font-weight-bold: 700;
+  --vcis-font-weight-extrabold: 800;
+
+  /* Legacy Weight Aliases */
+  --font-weight-regular: var(--vcis-font-weight-regular);
+  --font-weight-medium: var(--vcis-font-weight-medium);
+  --font-weight-semibold: var(--vcis-font-weight-semibold);
+  --font-weight-bold: var(--vcis-font-weight-bold);
+  --font-weight-extrabold: var(--vcis-font-weight-extrabold);
+
+  --vcis-line-height-tight: 1.25;
+  --vcis-line-height-base: 1.5;
+  --vcis-line-height-relaxed: 1.625;
+
+  /* --- Spacing Scale --- */
+  --space-1: 0.25rem;   /* 4px */
+  --space-2: 0.5rem;    /* 8px */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-5: 1.25rem;   /* 20px */
+  --space-6: 1.5rem;    /* 24px */
+  --space-8: 2rem;      /* 32px */
+  --space-10: 2.5rem;   /* 40px */
+  --space-12: 3rem;     /* 48px */
+
+  /* Legacy Space Aliases */
+  --vcis-space-1: var(--space-1);
+  --vcis-space-2: var(--space-2);
+  --vcis-space-3: var(--space-3);
+  --vcis-space-4: var(--space-4);
+  --vcis-space-5: var(--space-5);
+  --vcis-space-6: var(--space-6);
+  --vcis-space-8: var(--space-8);
+  --vcis-space-10: var(--space-10);
+  --vcis-space-12: var(--space-12);
+
+  /* --- Border Radius Scale (Restrained, Professional) --- */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --radius-xl: 14px;
+  --radius-pill: 9999px;
+
+  /* --- Refined Light Shadow System (Subtle, Barely Elevated) --- */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.03);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.06), 0 4px 6px -4px rgba(0, 0, 0, 0.02);
+  --shadow-card: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.02);
+  --shadow-modal: 0 16px 24px -4px rgba(15, 23, 42, 0.12), 0 6px 10px -4px rgba(15, 23, 42, 0.06);
+
+  /* --- Transitions (150ms default snappy micro-interactions) --- */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.2s ease;
+  --transition-slow: 0.3s ease;
+}
+
+/* ==========================================================================
+   2. TYPOGRAPHY CLASSES
+   ========================================================================== */
+
+.vcis-page-title {
+  font-family: var(--vcis-font-sans);
+  font-size: var(--vcis-font-size-2xl);
+  font-weight: var(--vcis-font-weight-bold);
+  line-height: var(--vcis-line-height-tight);
+  color: var(--vcis-text);
+  letter-spacing: -0.025em;
+  margin: 0;
+}
+
+.vcis-page-subtitle {
+  font-family: var(--vcis-font-sans);
+  font-size: var(--vcis-font-size-sm);
+  color: var(--vcis-text-secondary);
+  line-height: var(--vcis-line-height-base);
+  margin-top: var(--space-1);
+  margin-bottom: 0;
+}
+
+.vcis-section-title {
+  font-family: var(--vcis-font-sans);
+  font-size: var(--vcis-font-size-lg);
+  font-weight: var(--vcis-font-weight-semibold);
+  line-height: var(--vcis-line-height-tight);
+  color: var(--vcis-text);
+  margin: 0;
+}
+
+.vcis-card-title {
+  font-family: var(--vcis-font-sans);
+  font-size: 0.9375rem;
+  font-weight: var(--vcis-font-weight-semibold);
+  color: var(--vcis-text);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.vcis-card-subtitle {
+  font-family: var(--vcis-font-sans);
+  font-size: var(--vcis-font-size-xs);
+  color: var(--vcis-text-muted);
+  margin-top: 0.15rem;
+  margin-bottom: 0;
+  line-height: 1.4;
+}
+
+.vcis-body {
+  font-family: var(--vcis-font-sans);
+  font-size: var(--vcis-font-size-base);
+  color: var(--vcis-text);
+  line-height: var(--vcis-line-height-base);
+}
+
+.vcis-text-secondary {
+  color: var(--vcis-text-secondary);
+}
+
+.vcis-text-muted {
+  color: var(--vcis-text-muted);
+}
+
+.vcis-caption {
+  font-family: var(--vcis-font-sans);
+  font-size: var(--vcis-font-size-xs);
+  color: var(--vcis-text-muted);
+  line-height: 1.4;
+}
+
+.vcis-metric {
+  font-family: var(--vcis-font-sans);
+  font-size: var(--vcis-font-size-2xl);
+  font-weight: var(--vcis-font-weight-bold);
+  line-height: 1.15;
+  color: var(--vcis-text);
+  letter-spacing: -0.02em;
+}
+
+.vcis-metric-lg {
+  font-family: var(--vcis-font-sans);
+  font-size: var(--vcis-font-size-3xl);
+  font-weight: var(--vcis-font-weight-extrabold);
+  line-height: 1;
+  color: var(--vcis-text);
+  letter-spacing: -0.03em;
+}
+
+.vcis-label {
+  font-family: var(--vcis-font-sans);
+  font-size: var(--vcis-font-size-sm);
+  font-weight: var(--vcis-font-weight-medium);
+  color: var(--vcis-text-secondary);
+  display: block;
+}
+
+/* ==========================================================================
+   3. LAYOUT UTILITIES
+   ========================================================================== */
+
+.vcis-page {
+  min-height: 100vh;
+  background-color: var(--vcis-bg);
+  color: var(--vcis-text);
+  font-family: var(--vcis-font-sans);
+  display: flex;
+  flex-direction: column;
+}
+
+.vcis-page-header {
+  display: flex;
+  justifyContent: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.vcis-page-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.vcis-section {
+  margin-bottom: var(--space-6);
+}
+
+.vcis-grid {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.vcis-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.vcis-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.vcis-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.vcis-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.vcis-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+/* ==========================================================================
+   4. SURFACE / CARD SYSTEM
+   ========================================================================== */
+
+.vcis-card {
+  background-color: var(--vcis-surface);
+  border: 1px solid var(--vcis-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.vcis-card:hover {
+  border-color: var(--vcis-border-strong);
+}
+
+.vcis-card-header {
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--vcis-border);
+  display: flex;
+  justifyContent: space-between;
+  align-items: center;
+  gap: var(--space-3);
+  background-color: var(--vcis-surface);
+}
+
+.vcis-card-body {
+  padding: var(--space-5);
+}
+
+.vcis-card-footer {
+  padding: var(--space-3) var(--space-5);
+  border-top: 1px solid var(--vcis-border);
+  background-color: var(--vcis-surface-soft);
+  display: flex;
+  justifyContent: flex-end;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+/* ==========================================================================
+   5. BUTTON SYSTEM
+   ========================================================================== */
+
+.vcis-button,
+.vcis-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--vcis-font-sans);
+  font-size: var(--vcis-font-size-sm);
+  font-weight: var(--vcis-font-weight-semibold);
+  line-height: 1;
+  padding: 0.45rem 0.95rem;
+  height: 36px;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color var(--transition-fast),
+              border-color var(--transition-fast),
+              color var(--transition-fast),
+              box-shadow var(--transition-fast);
+  user-select: none;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+.vcis-button:focus-visible,
+.vcis-btn:focus-visible {
+  outline: 2px solid var(--vcis-border-focus);
+  outline-offset: 2px;
+}
+
+.vcis-button:disabled,
+.vcis-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Button Variants */
+.vcis-button-primary,
+.vcis-btn-primary {
+  background-color: var(--vcis-primary);
+  color: #ffffff;
+  border-color: var(--vcis-primary);
+  box-shadow: 0 1px 2px rgba(37, 99, 235, 0.18);
+}
+
+.vcis-button-primary:hover,
+.vcis-btn-primary:hover {
+  background-color: var(--vcis-primary-hover);
+  border-color: var(--vcis-primary-hover);
+  box-shadow: 0 2px 4px rgba(37, 99, 235, 0.25);
+}
+
+.vcis-button-primary:active,
+.vcis-btn-primary:active {
+  background-color: var(--vcis-primary-active);
+}
+
+.vcis-button-secondary,
+.vcis-btn-secondary {
+  background-color: var(--vcis-surface);
+  color: var(--vcis-text);
+  border-color: var(--vcis-border-strong);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.vcis-button-secondary:hover,
+.vcis-btn-secondary:hover {
+  background-color: var(--vcis-surface-soft);
+  border-color: var(--vcis-text-muted);
+}
+
+.vcis-button-danger,
+.vcis-btn-danger {
+  background-color: var(--vcis-danger);
+  color: #ffffff;
+  border-color: var(--vcis-danger);
+  box-shadow: 0 1px 2px rgba(220, 38, 38, 0.18);
+}
+
+.vcis-button-danger:hover,
+.vcis-btn-danger:hover {
+  background-color: var(--vcis-danger-hover);
+  border-color: var(--vcis-danger-hover);
+}
+
+.vcis-button-ghost,
+.vcis-btn-ghost {
+  background-color: transparent;
+  color: var(--vcis-text-secondary);
+  border-color: transparent;
+}
+
+.vcis-button-ghost:hover,
+.vcis-btn-ghost:hover {
+  background-color: var(--vcis-surface-soft);
+  color: var(--vcis-text);
+}
+
+/* Button Sizes */
+.vcis-button-sm,
+.vcis-btn-sm {
+  font-size: var(--vcis-font-size-xs);
+  padding: 0.2rem 0.65rem;
+  height: 28px;
+  border-radius: var(--radius-sm);
+}
+
+.vcis-button-lg,
+.vcis-btn-lg {
+  font-size: var(--vcis-font-size-base);
+  padding: 0.65rem 1.25rem;
+  height: 42px;
+  border-radius: var(--radius-lg);
+}
+
+/* ==========================================================================
+   6. FORM SYSTEM
+   ========================================================================== */
+
+.vcis-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.vcis-form-label {
+  display: block;
+  font-family: var(--vcis-font-sans);
+  font-size: var(--vcis-font-size-xs);
+  font-weight: var(--vcis-font-weight-semibold);
+  color: var(--vcis-text-secondary);
+}
+
+.vcis-input,
+.vcis-select,
+.vcis-textarea,
+.vcis-form-input,
+.vcis-form-select,
+.vcis-form-textarea {
+  width: 100%;
+  font-family: var(--vcis-font-sans);
+  font-size: var(--vcis-font-size-sm);
+  color: var(--vcis-text);
+  background-color: var(--vcis-surface);
+  border: 1px solid var(--vcis-border-strong);
+  border-radius: var(--radius-md);
+  padding: 0.45rem 0.75rem;
+  min-height: 36px;
+  box-sizing: border-box;
+  outline: none;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.vcis-input::placeholder,
+.vcis-textarea::placeholder,
+.vcis-form-input::placeholder,
+.vcis-form-textarea::placeholder {
+  color: #94a3b8;
+}
+
+.vcis-input:focus,
+.vcis-select:focus,
+.vcis-textarea:focus,
+.vcis-form-input:focus,
+.vcis-form-select:focus,
+.vcis-form-textarea:focus {
+  border-color: var(--vcis-primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+  background-color: var(--vcis-surface);
+}
+
+.vcis-input:disabled,
+.vcis-select:disabled,
+.vcis-textarea:disabled,
+.vcis-form-input:disabled,
+.vcis-form-select:disabled,
+.vcis-form-textarea:disabled {
+  opacity: 0.6;
+  background-color: var(--vcis-surface-soft);
+  cursor: not-allowed;
+}
+
+.vcis-select,
+.vcis-form-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%23475569' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3E%3C/svg%3E");
+  background-position: right 0.75rem center;
+  background-repeat: no-repeat;
+  background-size: 1.2em 1.2em;
+  padding-right: 2.25rem;
+}
+
+.vcis-textarea,
+.vcis-form-textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.vcis-form-error {
+  font-size: var(--vcis-font-size-xs);
+  color: var(--vcis-danger);
+  margin-top: var(--space-1);
+}
+
+.vcis-form-help {
+  font-size: var(--vcis-font-size-xs);
+  color: var(--vcis-text-muted);
+  margin-top: var(--space-1);
+}
+
+/* ==========================================================================
+   7. STATUS SYSTEM (NORMAL / MONITOR / INTERVENTION + SEMANTIC TIERS)
+   ========================================================================== */
+
+.vcis-status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--vcis-font-sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.18rem 0.55rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid transparent;
+  line-height: 1.2;
+}
+
+/* Canonical VCIS Status Tiers */
+.vcis-status-normal {
+  background-color: var(--vcis-status-normal-bg);
+  color: var(--vcis-status-normal-text);
+  border-color: var(--vcis-status-normal-border);
+}
+
+.vcis-status-monitor {
+  background-color: var(--vcis-status-monitor-bg);
+  color: var(--vcis-status-monitor-text);
+  border-color: var(--vcis-status-monitor-border);
+}
+
+.vcis-status-intervention {
+  background-color: var(--vcis-status-intervention-bg);
+  color: var(--vcis-status-intervention-text);
+  border-color: var(--vcis-status-intervention-border);
+}
+
+/* Generic Semantic Statuses */
+.vcis-status-success {
+  background-color: var(--vcis-success-soft);
+  color: var(--vcis-success-text);
+  border-color: var(--vcis-success-border);
+}
+
+.vcis-status-warning {
+  background-color: var(--vcis-warning-soft);
+  color: var(--vcis-warning-text);
+  border-color: var(--vcis-warning-border);
+}
+
+.vcis-status-danger {
+  background-color: var(--vcis-danger-soft);
+  color: var(--vcis-danger-text);
+  border-color: var(--vcis-danger-border);
+}
+
+.vcis-status-neutral {
+  background-color: var(--vcis-neutral-soft);
+  color: var(--vcis-neutral-text);
+  border-color: var(--vcis-neutral-border);
+}
+
+/* Badges */
+.vcis-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.18rem 0.55rem;
+  border-radius: var(--radius-pill);
+  font-family: var(--vcis-font-sans);
+  font-size: 0.7rem;
+  font-weight: 500;
+  border: 1px solid transparent;
+  line-height: 1.2;
+}
+
+.vcis-badge-neutral {
+  background-color: var(--vcis-surface-raised);
+  color: var(--vcis-text-secondary);
+  border-color: var(--vcis-border);
+}
+
+.vcis-badge-primary {
+  background-color: var(--vcis-primary-soft);
+  color: var(--vcis-primary);
+  border-color: var(--vcis-primary-border);
+}
+
+.vcis-badge-success {
+  background-color: var(--vcis-success-soft);
+  color: var(--vcis-success-text);
+  border-color: var(--vcis-success-border);
+}
+
+.vcis-badge-warning {
+  background-color: var(--vcis-warning-soft);
+  color: var(--vcis-warning-text);
+  border-color: var(--vcis-warning-border);
+}
+
+.vcis-badge-danger {
+  background-color: var(--vcis-danger-soft);
+  color: var(--vcis-danger-text);
+  border-color: var(--vcis-danger-border);
+}
+
+/* Intervention Lifecycle Badges */
+.vcis-badge-assigned {
+  background-color: #eff6ff;
+  color: #1e40af;
+  border-color: #bfdbfe;
+}
+
+.vcis-badge-in-progress {
+  background-color: #fffbeb;
+  color: #92400e;
+  border-color: #fde68a;
+}
+
+.vcis-badge-completed {
+  background-color: #ecfdf5;
+  color: #065f46;
+  border-color: #a7f3d0;
+}
+
+.vcis-badge-dismissed {
+  background-color: #f1f5f9;
+  color: #475569;
+  border-color: #e2e8f0;
+}
+
+/* ==========================================================================
+   8. TABLE SYSTEM
+   ========================================================================== */
+
+.vcis-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--vcis-border);
+  border-radius: var(--radius-lg);
+  background-color: var(--vcis-surface);
+  box-shadow: var(--shadow-card);
+  -webkit-overflow-scrolling: touch;
+}
+
+.vcis-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-family: var(--vcis-font-sans);
+  font-size: var(--vcis-font-size-sm);
+  color: var(--vcis-text);
+}
+
+.vcis-table-header {
+  background-color: var(--vcis-surface-soft);
+  border-bottom: 1px solid var(--vcis-border);
+}
+
+.vcis-table-header th {
+  padding: 0.6rem 0.85rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--vcis-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.vcis-table-row {
+  border-bottom: 1px solid var(--vcis-border-subtle);
+  transition: background-color var(--transition-fast);
+}
+
+.vcis-table-row:last-child {
+  border-bottom: none;
+}
+
+.vcis-table-row:hover {
+  background-color: var(--vcis-surface-soft);
+}
+
+.vcis-table-row.is-selected {
+  background-color: rgba(37, 99, 235, 0.05);
+}
+
+.vcis-table-cell {
+  padding: 0.65rem 0.85rem;
+  vertical-align: middle;
+}
+
+/* ==========================================================================
+   9. MODAL SYSTEM
+   ========================================================================== */
+
+.vcis-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  z-index: 1000;
+  animation: vcisFadeIn var(--transition-fast) ease-out;
+}
+
+.vcis-modal {
+  width: 100%;
+  max-width: 560px;
+  background-color: var(--vcis-surface);
+  border: 1px solid var(--vcis-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-modal);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 2rem);
+  animation: vcisScaleUp var(--transition-fast) ease-out;
+}
+
+.vcis-modal-header {
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--vcis-border);
+  display: flex;
+  justifyContent: space-between;
+  align-items: center;
+  background-color: var(--vcis-surface);
+}
+
+.vcis-modal-title {
+  font-family: var(--vcis-font-sans);
+  font-size: var(--vcis-font-size-md);
+  font-weight: var(--vcis-font-weight-semibold);
+  color: var(--vcis-text);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.vcis-modal-subtitle {
+  font-family: var(--vcis-font-sans);
+  font-size: var(--vcis-font-size-xs);
+  color: var(--vcis-text-muted);
+  margin-top: 0.15rem;
+  margin-bottom: 0;
+}
+
+.vcis-modal-close-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--vcis-text-muted);
+  width: 28px;
+  height: 28px;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  transition: color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.vcis-modal-close-btn:hover {
+  color: var(--vcis-text);
+  background-color: var(--vcis-surface-raised);
+}
+
+.vcis-modal-body {
+  padding: var(--space-5);
+  overflow-y: auto;
+  background-color: var(--vcis-surface);
+}
+
+.vcis-modal-footer {
+  padding: var(--space-3) var(--space-5);
+  border-top: 1px solid var(--vcis-border);
+  background-color: var(--vcis-surface-soft);
+  display: flex;
+  justifyContent: flex-end;
+  gap: var(--space-3);
+}
+
+/* ==========================================================================
+   10. LOADING / EMPTY / ERROR / ALERT STATES
+   ========================================================================== */
+
+.vcis-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8);
+  color: var(--vcis-text-secondary);
+  font-size: var(--vcis-font-size-sm);
+  gap: var(--space-3);
+}
+
+.vcis-spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid var(--vcis-border);
+  border-top-color: var(--vcis-primary);
+  border-radius: 50%;
+  animation: vcisSpin 0.8s linear infinite;
+}
+
+.vcis-empty,
+.vcis-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-8) var(--space-4);
+  background-color: var(--vcis-surface);
+  border: 1px dashed var(--vcis-border);
+  border-radius: var(--radius-lg);
+  color: var(--vcis-text-secondary);
+}
+
+.vcis-empty-title {
+  font-size: var(--vcis-font-size-base);
+  font-weight: var(--vcis-font-weight-semibold);
+  color: var(--vcis-text);
+  margin: 0 0 var(--space-1) 0;
+}
+
+.vcis-empty-text {
+  font-size: var(--vcis-font-size-sm);
+  color: var(--vcis-text-secondary);
+  margin: 0;
+  max-width: 480px;
+}
+
+.vcis-error {
+  padding: var(--space-4) var(--space-5);
+  background-color: var(--vcis-danger-soft);
+  border: 1px solid var(--vcis-danger-border);
+  border-radius: var(--radius-md);
+  color: var(--vcis-danger-text);
+  font-size: var(--vcis-font-size-sm);
+  line-height: var(--vcis-line-height-base);
+}
+
+/* Alert System */
+.vcis-alert {
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  font-size: var(--vcis-font-size-sm);
+  line-height: 1.5;
+  border: 1px solid transparent;
+}
+
+.vcis-alert-success {
+  background-color: var(--vcis-success-bg);
+  border-color: var(--vcis-success-border);
+  color: var(--vcis-success-text);
+}
+
+.vcis-alert-warning {
+  background-color: var(--vcis-warning-bg);
+  border-color: var(--vcis-warning-border);
+  color: var(--vcis-warning-text);
+}
+
+.vcis-alert-danger {
+  background-color: var(--vcis-danger-bg);
+  border-color: var(--vcis-danger-border);
+  color: var(--vcis-danger-text);
+}
+
+/* ==========================================================================
+   11. APPLICATION SHELL & INSTITUTIONAL TOPBAR
+   ========================================================================== */
+
+.vcis-shell {
+  min-height: 100vh;
+  background-color: var(--vcis-bg);
+  color: var(--vcis-text);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.vcis-shell-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: 60px;
+  background-color: #0f172a; /* Authoritative deep navy contrast topbar */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-6);
+  transition: background-color var(--transition-normal);
+}
+
+.vcis-shell-brand-group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+.vcis-shell-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  text-decoration: none;
+  color: inherit;
+}
+
+.vcis-shell-logo-badge {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--vcis-primary) 0%, #1e40af 100%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.3);
+  flex-shrink: 0;
+}
+
+.vcis-shell-logo-text {
+  font-family: var(--vcis-font-sans);
+  font-size: 0.875rem;
+  font-weight: var(--vcis-font-weight-extrabold);
+  color: #ffffff;
+  letter-spacing: 0.05em;
+}
+
+.vcis-shell-brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.vcis-shell-brand-heading {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+
+.vcis-shell-title {
+  font-family: var(--vcis-font-sans);
+  font-size: var(--vcis-font-size-md);
+  font-weight: var(--vcis-font-weight-bold);
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.vcis-shell-subtitle {
+  font-family: var(--vcis-font-sans);
+  font-size: 0.72rem;
+  color: #94a3b8;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+.vcis-shell-tagline {
+  font-family: var(--vcis-font-sans);
+  font-size: 0.64rem;
+  color: #38bdf8;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: var(--vcis-font-weight-semibold);
+  line-height: 1.2;
+}
+
+.vcis-shell-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.vcis-shell-nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-md);
+  font-family: var(--vcis-font-sans);
+  font-size: var(--vcis-font-size-sm);
+  font-weight: var(--vcis-font-weight-medium);
+  color: #cbd5e1;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: all var(--transition-fast);
+}
+
+.vcis-shell-nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+
+.vcis-shell-nav-link.is-active {
+  background-color: rgba(37, 99, 235, 0.2);
+  color: #93c5fd;
+  border-color: rgba(37, 99, 235, 0.4);
+  font-weight: var(--vcis-font-weight-semibold);
+}
+
+.vcis-shell-nav-link:focus-visible {
+  outline: 2px solid var(--vcis-border-focus);
+  outline-offset: 2px;
+}
+
+.vcis-shell-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.vcis-shell-role-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.18rem 0.6rem;
+  border-radius: var(--radius-pill);
+  font-family: var(--vcis-font-sans);
+  font-size: 0.7rem;
+  font-weight: var(--vcis-font-weight-bold);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.vcis-shell-role-student {
+  background-color: rgba(37, 99, 235, 0.16);
+  border: 1px solid rgba(59, 130, 246, 0.35);
+  color: #93c5fd;
+}
+
+.vcis-shell-role-faculty {
+  background-color: rgba(16, 185, 129, 0.16);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  color: #6ee7b7;
+}
+
+.vcis-shell-role-hod {
+  background-color: rgba(99, 102, 241, 0.16);
+  border: 1px solid rgba(129, 140, 248, 0.35);
+  color: #c7d2fe;
+}
+
+.vcis-shell-role-admin {
+  background-color: rgba(245, 158, 11, 0.16);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  color: #fcd34d;
+}
+
+.vcis-shell-user {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--vcis-font-sans);
+  font-size: var(--vcis-font-size-sm);
+  color: #cbd5e1;
+}
+
+.vcis-shell-user-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background-color: var(--vcis-success);
+  box-shadow: 0 0 6px rgba(16, 185, 129, 0.6);
+  flex-shrink: 0;
+}
+
+.vcis-shell-user-email {
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vcis-shell-logout-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  padding: 0 0.75rem;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background-color: rgba(255, 255, 255, 0.06);
+  color: #cbd5e1;
+  font-family: var(--vcis-font-sans);
+  font-size: var(--vcis-font-size-xs);
+  font-weight: var(--vcis-font-weight-medium);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.vcis-shell-logout-btn:hover {
+  background-color: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #ffffff;
+}
+
+.vcis-shell-logout-btn:focus-visible {
+  outline: 2px solid var(--vcis-danger);
+  outline-offset: 2px;
+}
+
+.vcis-shell-mobile-btn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background-color: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+  cursor: pointer;
+  width: 38px;
+  height: 38px;
+}
+
+.vcis-shell-mobile-menu {
+  display: none;
+  background-color: #0f172a;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: var(--space-4) var(--space-6);
+  flex-direction: column;
+  gap: var(--space-3);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+}
+
+.vcis-shell-mobile-menu.is-open {
+  display: flex;
+}
+
+.vcis-shell-main {
+  flex: 1;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-6) var(--space-12);
+  box-sizing: border-box;
+}
+
+/* ==========================================================================
+   12. PREDICTION VISUAL FOUNDATION
+   ========================================================================== */
+
+.vcis-prediction-card {
+  background: var(--vcis-surface);
+  border: 1px solid var(--vcis-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-card);
+  position: relative;
+  overflow: hidden;
+}
+
+.vcis-prediction-score {
+  font-family: var(--vcis-font-sans);
+  font-size: var(--vcis-font-size-3xl);
+  font-weight: var(--vcis-font-weight-extrabold);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin: var(--space-2) 0;
+}
+
+.vcis-prediction-label {
+  font-size: var(--vcis-font-size-xs);
+  color: var(--vcis-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: var(--vcis-font-weight-semibold);
+}
+
+.vcis-prediction-normal {
+  color: var(--vcis-status-normal-text);
+}
+
+.vcis-prediction-monitor {
+  color: var(--vcis-status-monitor-text);
+}
+
+.vcis-prediction-intervention {
+  color: var(--vcis-status-intervention-text);
+}
+
+/* ==========================================================================
+   13. ANIMATIONS & TRANSITIONS (REDUCED MOTION COMPLIANT)
+   ========================================================================== */
+
+@keyframes vcisSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes vcisFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes vcisScaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ==========================================================================
+   14. SHARED WORKSPACE COMPONENTS
+   ========================================================================== */
+
+/* --- Welcome / Academic Context Banner --- */
+.vcis-welcome-card {
+  background-color: var(--vcis-surface);
+  border: 1px solid var(--vcis-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-5);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  justifyContent: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.vcis-welcome-title {
+  margin: 0;
+  font-size: var(--vcis-font-size-xl);
+  font-weight: var(--vcis-font-weight-bold);
+  color: var(--vcis-text);
+  letter-spacing: -0.02em;
+}
+
+.vcis-welcome-subtitle {
+  margin: var(--space-1) 0 0 0;
+  font-size: var(--vcis-font-size-sm);
+  color: var(--vcis-text-secondary);
+}
+
+.vcis-meta-pill-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.vcis-meta-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-pill);
+  background-color: var(--vcis-surface-soft);
+  border: 1px solid var(--vcis-border);
+  font-size: var(--vcis-font-size-xs);
+  color: var(--vcis-text-secondary);
+}
+
+.vcis-meta-pill strong {
+  color: var(--vcis-text);
+  font-weight: var(--vcis-font-weight-semibold);
+}
+
+.vcis-meta-label {
+  color: var(--vcis-text-muted);
+}
+
+.vcis-meta-value {
+  color: var(--vcis-text);
+  font-weight: var(--vcis-font-weight-semibold);
+}
+
+/* --- Prediction Hero Styling --- */
+.vcis-hero-prediction {
+  background-color: var(--vcis-surface);
+  border: 1px solid var(--vcis-border);
+  border-top: 3px solid var(--vcis-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5) var(--space-6);
+  box-shadow: var(--shadow-card);
+  position: relative;
+  overflow: hidden;
+}
+
+.vcis-hero-prediction-score {
+  font-family: var(--vcis-font-sans);
+  font-size: clamp(2rem, 3.5vw, 2.75rem);
+  font-weight: var(--vcis-font-weight-extrabold);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: var(--vcis-text);
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  margin: var(--space-2) 0;
+}
+
+.vcis-hero-prediction-denominator {
+  font-size: 1.125rem;
+  font-weight: var(--vcis-font-weight-medium);
+  color: var(--vcis-text-muted);
+}
+
+.vcis-status-pill-lg {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-pill);
+  font-size: var(--vcis-font-size-sm);
+  font-weight: var(--vcis-font-weight-bold);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* --- Academic KPI Grid --- */
+.vcis-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.vcis-kpi-card {
+  background-color: var(--vcis-surface);
+  border: 1px solid var(--vcis-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4) var(--space-5);
+  box-shadow: var(--shadow-card);
+  min-height: 96px;
+  display: flex;
+  flex-direction: column;
+  justifyContent: space-between;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.vcis-kpi-card:hover {
+  border-color: var(--vcis-border-strong);
+}
+
+.vcis-kpi-value {
+  font-family: var(--vcis-font-sans);
+  font-size: 1.75rem;
+  font-weight: var(--vcis-font-weight-bold);
+  color: var(--vcis-text);
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+}
+
+.vcis-kpi-label {
+  font-size: 0.75rem;
+  font-weight: var(--vcis-font-weight-medium);
+  color: var(--vcis-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 0.2rem;
+  margin-bottom: 0;
+}
+
+.vcis-kpi-context {
+  font-size: 0.75rem;
+  color: var(--vcis-text-muted);
+  margin-top: var(--space-2);
+}
+
+/* --- Progress Tracking Bar --- */
+.vcis-progress-container {
+  width: 100%;
+  background-color: var(--vcis-border);
+  border-radius: var(--radius-pill);
+  height: 8px;
+  position: relative;
+  overflow: hidden;
+  margin: var(--space-2) 0;
+}
+
+.vcis-progress-bar {
+  height: 100%;
+  border-radius: var(--radius-pill);
+  transition: width 0.6s ease;
+}
+
+.vcis-progress-marker {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background-color: var(--vcis-text);
+  z-index: 2;
+}
+
+/* --- Tabs & Trajectory --- */
+.vcis-tab-list {
+  display: flex;
+  gap: var(--space-2);
+  border-bottom: 1px solid var(--vcis-border);
+  padding-bottom: var(--space-2);
+  margin-bottom: var(--space-4);
+  overflow-x: auto;
+}
+
+.vcis-tab-btn {
+  padding: 0.45rem 1rem;
+  border-radius: var(--radius-md);
+  font-size: var(--vcis-font-size-sm);
+  font-weight: var(--vcis-font-weight-medium);
+  color: var(--vcis-text-secondary);
+  background-color: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.vcis-tab-btn:hover {
+  background-color: var(--vcis-surface-soft);
+  color: var(--vcis-text);
+}
+
+.vcis-tab-btn.is-active {
+  background-color: #eff6ff;
+  color: var(--vcis-primary);
+  border-color: rgba(37, 99, 235, 0.25);
+  font-weight: var(--vcis-font-weight-semibold);
+}
+
+.vcis-trajectory {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  padding: var(--space-3) 0;
+}
+
+.vcis-trajectory-step {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--vcis-font-size-xs);
+  color: var(--vcis-text-secondary);
+}
+
+.vcis-trajectory-node {
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-pill);
+  background-color: var(--vcis-surface-soft);
+  border: 1px solid var(--vcis-border);
+  font-weight: var(--vcis-font-weight-semibold);
+  font-size: var(--vcis-font-size-xs);
+  color: var(--vcis-text-secondary);
+}
+
+.vcis-trajectory-arrow {
+  color: var(--vcis-text-muted);
+}
+
+/* ==========================================================================
+   15. FACULTY & HOD WORKSPACE UTILITIES
+   ========================================================================== */
+
+.vcis-faculty-layout {
+  display: grid;
+  grid-template-columns: minmax(360px, 440px) 1fr;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .vcis-faculty-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.vcis-hod-analytics-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+  margin-bottom: var(--space-6);
+}
+
+@media (max-width: 1024px) {
+  .vcis-hod-analytics-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.vcis-distribution-bar {
+  display: flex;
+  width: 100%;
+  height: 8px;
+  background-color: var(--vcis-surface-muted);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  margin-top: var(--space-2);
+  margin-bottom: var(--space-2);
+  border: 1px solid var(--vcis-border);
+}
+
+.vcis-distribution-segment {
+  height: 100%;
+  transition: width var(--transition-normal);
+}
+
+.vcis-distribution-segment-normal {
+  background-color: var(--vcis-success);
+}
+
+.vcis-distribution-segment-monitor {
+  background-color: var(--vcis-warning);
+}
+
+.vcis-distribution-segment-intervention {
+  background-color: var(--vcis-danger);
+}
+
+/* --- Administrator Workspace Utilities --- */
+.vcis-admin-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--space-3);
+}
+
+.vcis-role-badge-admin {
+  background-color: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fde68a;
+}
+
+.vcis-role-badge-hod {
+  background-color: #e0e7ff;
+  color: #3730a3;
+  border: 1px solid #c7d2fe;
+}
+
+.vcis-role-badge-faculty {
+  background-color: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+
+.vcis-role-badge-student {
+  background-color: #eff6ff;
+  color: #1e40af;
+  border: 1px solid #bfdbfe;
+}
+
+/* ==========================================================================
+   16. RESPONSIVE BREAKPOINTS
+   ========================================================================== */
+
+/* Tablet (max-width: 1024px) */
+@media (max-width: 1024px) {
+  .vcis-grid-4,
+  .vcis-kpi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  
+  .vcis-grid-3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .vcis-shell-tagline {
+    display: none;
+  }
+}
+
+/* Mobile (max-width: 768px) */
+@media (max-width: 768px) {
+  .vcis-grid-4,
+  .vcis-grid-3,
+  .vcis-grid-2,
+  .vcis-kpi-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .vcis-page-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-3);
+  }
+
+  .vcis-modal {
+    max-width: 100%;
+    margin: var(--space-2);
+  }
+
+  .vcis-shell-topbar {
+    padding: 0 var(--space-4);
+  }
+
+  .vcis-shell-subtitle {
+    display: none;
+  }
+
+  .vcis-shell-nav {
+    display: none;
+  }
+
+  .vcis-shell-actions .vcis-shell-user,
+  .vcis-shell-actions .vcis-shell-logout-btn {
+    display: none;
+  }
+
+  .vcis-shell-mobile-btn {
+    display: flex;
+  }
+
+  .vcis-shell-main {
+    padding: var(--space-4) var(--space-4) var(--space-8);
+  }
+}
+
+/* Small phone (max-width: 480px) */
+@media (max-width: 480px) {
+  .vcis-modal-header,
+  .vcis-modal-body,
+  .vcis-modal-footer {
+    padding-left: var(--space-4);
+    padding-right: var(--space-4);
+  }
+
+  .vcis-shell-role-badge {
+    font-size: 0.62rem;
+    padding: 0.15rem 0.45rem;
+  }
+}

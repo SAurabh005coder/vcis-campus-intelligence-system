@@ -1,0 +1,17 @@
+# =============================================================================
+# VCIS — Netlify Deployment Configuration (Frontend SPA)
+# =============================================================================
+# Note: Netlify hosts the React/Vite frontend only.
+# The FastAPI backend and PostgreSQL database are hosted separately.
+# Configure VITE_API_BASE_URL in Netlify Site Settings > Environment Variables.
+
+[build]
+  base = "frontend"
+  command = "npm run build"
+  publish = "dist"
+
+# SPA Client-Side Routing: redirect all route requests to /index.html
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

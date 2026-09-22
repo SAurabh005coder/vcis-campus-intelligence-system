@@ -5,7 +5,11 @@ import jwt
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
-from app.core.security import verify_password
+from app.core.security import (
+    get_jwt_algorithm,
+    get_jwt_secret_key,
+    verify_password,
+)
 from app.database import get_db
 from app.models.user import User
 from app.schemas.auth import LoginRequest, TokenResponse
@@ -52,14 +56,11 @@ def login(
             detail="Invalid email or password.",
         )
 
-    secret_key = os.getenv("JWT_SECRET_KEY")
-    algorithm = os.getenv("JWT_ALGORITHM", "HS256")
+    secret_key = get_jwt_secret_key()
+    algorithm = get_jwt_algorithm()
     expires_minutes = int(
         os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "30")
     )
-
-    if not secret_key:
-        raise RuntimeError("JWT_SECRET_KEY is not configured.")
 
     expires_at = datetime.now(timezone.utc) + timedelta(
         minutes=expires_minutes

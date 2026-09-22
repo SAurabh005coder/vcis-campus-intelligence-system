@@ -44,10 +44,10 @@ def create_faculty(
             detail="User not found.",
         )
 
-    if user.role != UserRole.FACULTY:
+    if user.role not in (UserRole.FACULTY, UserRole.HOD):
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="The selected user does not have the faculty role.",
+            detail="The selected user does not have an eligible role (must be faculty or hod).",
         )
 
     existing_faculty = (

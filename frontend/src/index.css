@@ -1,4 +1,16 @@
+@import "./styles/design-system.css";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: var(--vcis-font-sans, Arial, sans-serif);
+  background-color: var(--vcis-bg);
+  color: var(--vcis-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }

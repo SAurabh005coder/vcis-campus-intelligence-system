@@ -7,6 +7,7 @@ from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sqlalchemy.orm import Session
 
+from app.core.security import get_jwt_algorithm, get_jwt_secret_key
 from app.database import get_db
 from app.models.user import User
 
@@ -20,11 +21,8 @@ def get_current_user(
     ),
     db: Session = Depends(get_db),
 ) -> User:
-    secret_key = os.getenv("JWT_SECRET_KEY")
-    algorithm = os.getenv("JWT_ALGORITHM", "HS256")
-
-    if not secret_key:
-        raise RuntimeError("JWT_SECRET_KEY is not configured.")
+    secret_key = get_jwt_secret_key()
+    algorithm = get_jwt_algorithm()
 
     token = credentials.credentials
 

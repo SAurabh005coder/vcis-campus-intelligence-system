@@ -23,6 +23,9 @@ router = APIRouter(
 def create_user(
     user_data: UserCreate,
     db: Session = Depends(get_db),
+    current_user: User = Depends(
+        require_roles(UserRole.ADMIN)
+    ),
 ):
     existing_user = (
         db.query(User)
@@ -47,6 +50,19 @@ def create_user(
     db.refresh(user)
 
     return user
+
+
+@router.get(
+    "/",
+    response_model=list[UserResponse],
+)
+def get_users(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(
+        require_roles(UserRole.ADMIN)
+    ),
+):
+    return db.query(User).all()
 
 
 @router.get(
