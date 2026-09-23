@@ -349,6 +349,8 @@ export const AdminDashboard: React.FC = () => {
               faculty={faculty}
               departments={departments}
               isLoading={isDataLoading}
+              users={users}
+              onFacultyUpdated={loadInitialData}
             />
           </div>
         )}

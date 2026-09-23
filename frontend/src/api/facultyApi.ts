@@ -291,3 +291,71 @@ export async function createAssessmentRecord(
     throw error;
   }
 }
+
+export interface FacultyUpdateRequest {
+  department_id: number;
+  employee_code: string;
+  first_name: string;
+  last_name: string;
+  designation: string;
+  phone?: string | null;
+  is_active?: boolean;
+}
+
+export interface FacultyCreateRequest {
+  user_id: number;
+  department_id: number;
+  employee_code: string;
+  first_name: string;
+  last_name: string;
+  designation: string;
+  phone?: string | null;
+}
+
+/**
+ * Update a faculty profile (Admin only).
+ * Reuses existing PUT /api/v1/faculty/{faculty_id} endpoint.
+ */
+export async function updateFacultyProfile(
+  facultyId: number,
+  payload: FacultyUpdateRequest
+): Promise<FacultyProfile> {
+  try {
+    const response = await apiClient.put<FacultyProfile>(
+      `/api/v1/faculty/${facultyId}`,
+      payload
+    );
+    return response.data;
+  } catch (error: unknown) {
+    const detail = (error as { response?: { data?: { detail?: string } } })
+      ?.response?.data?.detail;
+    if (detail) {
+      throw new Error(detail);
+    }
+    throw error;
+  }
+}
+
+/**
+ * Provision a faculty profile for a faculty or HOD user account (Admin only).
+ * Reuses existing POST /api/v1/faculty/ endpoint.
+ */
+export async function createFacultyProfile(
+  payload: FacultyCreateRequest
+): Promise<FacultyProfile> {
+  try {
+    const response = await apiClient.post<FacultyProfile>(
+      "/api/v1/faculty/",
+      payload
+    );
+    return response.data;
+  } catch (error: unknown) {
+    const detail = (error as { response?: { data?: { detail?: string } } })
+      ?.response?.data?.detail;
+    if (detail) {
+      throw new Error(detail);
+    }
+    throw error;
+  }
+}
+

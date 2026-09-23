@@ -32,6 +32,7 @@ from sqlalchemy.pool import StaticPool
 os.environ["JWT_SECRET_KEY"] = "test-security-secret-key-12345-extra-secure-key"
 
 from app.base import Base
+from app.core.authorization import resolve_hod_department_id
 from app.core.dependencies import get_current_user
 from app.core.security import hash_password
 from app.database import get_db
@@ -417,6 +418,198 @@ class TestHodFacultyProfilePrerequisite(unittest.TestCase):
         self.assertEqual(data_me["email"], self.user_hod.email)
         self.assertEqual(data_me["role"], UserRole.HOD.value)
 
+    def test_13_admin_updates_hod_department_succeeds(self):
+        """ADMIN updates HOD department -> 200 OK, DB and resolver reflect new department."""
+        # Provision HOD faculty profile in dept_cs
+        self.active_user = self.user_admin
+        create_payload = {
+            "user_id": self.user_hod.id,
+            "department_id": self.dept_cs.id,
+            "employee_code": "HOD-CSE-UPD",
+            "first_name": "Grace",
+            "last_name": "Hopper",
+            "designation": "Head of Department",
+            "phone": "+1-555-0199",
+        }
+        status_code, created_data = self._request("POST", "/api/v1/faculty/", json_data=create_payload)
+        self.assertEqual(status_code, 201)
+        faculty_id = created_data["id"]
+
+        # Admin updates HOD department to dept_ec
+        update_payload = {
+            "department_id": self.dept_ec.id,
+            "employee_code": "HOD-CSE-UPD",
+            "first_name": "Grace",
+            "last_name": "Hopper",
+            "designation": "Head of Department",
+            "phone": "+1-555-0199",
+            "is_active": True,
+        }
+        status_code_put, update_data = self._request("PUT", f"/api/v1/faculty/{faculty_id}", json_data=update_payload)
+        self.assertEqual(status_code_put, 200)
+        self.assertEqual(update_data["department_id"], self.dept_ec.id)
+
+        # Confirm persisted in DB
+        self.db.expire_all()
+        persisted = self.db.query(Faculty).filter(Faculty.id == faculty_id).first()
+        self.assertEqual(persisted.department_id, self.dept_ec.id)
+
+        # Confirm server-side HOD resolver reflects newly assigned department
+        resolved_dept_id = resolve_hod_department_id(self.user_hod, self.db)
+        self.assertEqual(resolved_dept_id, self.dept_ec.id)
+
+    def test_14_hod_cannot_update_own_department(self):
+        """HOD cannot update their own department -> 403 Forbidden."""
+        self.active_user = self.user_admin
+        create_payload = {
+            "user_id": self.user_hod.id,
+            "department_id": self.dept_cs.id,
+            "employee_code": "HOD-CSE-RBAC",
+            "first_name": "Grace",
+            "last_name": "Hopper",
+            "designation": "Head of Department",
+        }
+        status_code, created_data = self._request("POST", "/api/v1/faculty/", json_data=create_payload)
+        self.assertEqual(status_code, 201)
+        faculty_id = created_data["id"]
+
+        # HOD attempts to change their own department to dept_ec
+        self.active_user = self.user_hod
+        update_payload = {
+            "department_id": self.dept_ec.id,
+            "employee_code": "HOD-CSE-RBAC",
+            "first_name": "Grace",
+            "last_name": "Hopper",
+            "designation": "Head of Department",
+            "is_active": True,
+        }
+        status_code_put, _ = self._request("PUT", f"/api/v1/faculty/{faculty_id}", json_data=update_payload)
+        self.assertEqual(status_code_put, 403)
+
+        # Confirm department was NOT changed in DB
+        self.db.expire_all()
+        persisted = self.db.query(Faculty).filter(Faculty.id == faculty_id).first()
+        self.assertEqual(persisted.department_id, self.dept_cs.id)
+
+    def test_15_faculty_cannot_update_hod_department(self):
+        """FACULTY cannot update an HOD department -> 403 Forbidden."""
+        self.active_user = self.user_admin
+        create_payload = {
+            "user_id": self.user_hod.id,
+            "department_id": self.dept_cs.id,
+            "employee_code": "HOD-CSE-FAC",
+            "first_name": "Grace",
+            "last_name": "Hopper",
+            "designation": "Head of Department",
+        }
+        status_code, created_data = self._request("POST", "/api/v1/faculty/", json_data=create_payload)
+        self.assertEqual(status_code, 201)
+        faculty_id = created_data["id"]
+
+        self.active_user = self.user_faculty
+        update_payload = {
+            "department_id": self.dept_ec.id,
+            "employee_code": "HOD-CSE-FAC",
+            "first_name": "Grace",
+            "last_name": "Hopper",
+            "designation": "Head of Department",
+            "is_active": True,
+        }
+        status_code_put, _ = self._request("PUT", f"/api/v1/faculty/{faculty_id}", json_data=update_payload)
+        self.assertEqual(status_code_put, 403)
+
+    def test_16_student_cannot_update_hod_department(self):
+        """STUDENT cannot update an HOD department -> 403 Forbidden."""
+        self.active_user = self.user_admin
+        create_payload = {
+            "user_id": self.user_hod.id,
+            "department_id": self.dept_cs.id,
+            "employee_code": "HOD-CSE-STU",
+            "first_name": "Grace",
+            "last_name": "Hopper",
+            "designation": "Head of Department",
+        }
+        status_code, created_data = self._request("POST", "/api/v1/faculty/", json_data=create_payload)
+        self.assertEqual(status_code, 201)
+        faculty_id = created_data["id"]
+
+        self.active_user = self.user_student
+        update_payload = {
+            "department_id": self.dept_ec.id,
+            "employee_code": "HOD-CSE-STU",
+            "first_name": "Grace",
+            "last_name": "Hopper",
+            "designation": "Head of Department",
+            "is_active": True,
+        }
+        status_code_put, _ = self._request("PUT", f"/api/v1/faculty/{faculty_id}", json_data=update_payload)
+        self.assertEqual(status_code_put, 403)
+
+    def test_17_admin_update_hod_invalid_department_rejected(self):
+        """ADMIN updating HOD with nonexistent department ID -> 404 Not Found."""
+        self.active_user = self.user_admin
+        create_payload = {
+            "user_id": self.user_hod.id,
+            "department_id": self.dept_cs.id,
+            "employee_code": "HOD-CSE-INV",
+            "first_name": "Grace",
+            "last_name": "Hopper",
+            "designation": "Head of Department",
+        }
+        status_code, created_data = self._request("POST", "/api/v1/faculty/", json_data=create_payload)
+        self.assertEqual(status_code, 201)
+        faculty_id = created_data["id"]
+
+        update_payload = {
+            "department_id": 99999,
+            "employee_code": "HOD-CSE-INV",
+            "first_name": "Grace",
+            "last_name": "Hopper",
+            "designation": "Head of Department",
+            "is_active": True,
+        }
+        status_code_put, data = self._request("PUT", f"/api/v1/faculty/{faculty_id}", json_data=update_payload)
+        self.assertEqual(status_code_put, 404)
+        self.assertIn("active department", data.get("detail", "").lower())
+
+    def test_18_admin_update_hod_inactive_department_rejected(self):
+        """ADMIN updating HOD with inactive department ID -> 404 Not Found."""
+        self.active_user = self.user_admin
+        # Create an inactive department
+        inactive_dept = Department(
+            id=99,
+            name="Inactive Department",
+            code="INACT",
+            is_active=False,
+        )
+        self.db.add(inactive_dept)
+        self.db.commit()
+
+        create_payload = {
+            "user_id": self.user_hod.id,
+            "department_id": self.dept_cs.id,
+            "employee_code": "HOD-CSE-INACT",
+            "first_name": "Grace",
+            "last_name": "Hopper",
+            "designation": "Head of Department",
+        }
+        status_code, created_data = self._request("POST", "/api/v1/faculty/", json_data=create_payload)
+        self.assertEqual(status_code, 201)
+        faculty_id = created_data["id"]
+
+        update_payload = {
+            "department_id": inactive_dept.id,
+            "employee_code": "HOD-CSE-INACT",
+            "first_name": "Grace",
+            "last_name": "Hopper",
+            "designation": "Head of Department",
+            "is_active": True,
+        }
+        status_code_put, data = self._request("PUT", f"/api/v1/faculty/{faculty_id}", json_data=update_payload)
+        self.assertEqual(status_code_put, 404)
+        self.assertIn("active department", data.get("detail", "").lower())
+
 
 if __name__ == "__main__":
     unittest.main()
+
