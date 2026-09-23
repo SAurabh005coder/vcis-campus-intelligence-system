@@ -20,6 +20,8 @@ from app.routers.results import router as results_router
 from app.routers.students import router as students_router
 from app.routers.subjects import router as subjects_router
 from app.routers.users import router as users_router
+from app.routers.course_proposals import router as course_proposals_router
+from app.routers.subject_proposals import router as subject_proposals_router
 
 logger = logging.getLogger(__name__)
 
@@ -48,6 +50,8 @@ app.include_router(assessments_router)
 app.include_router(results_router)
 app.include_router(predictions_router)
 app.include_router(interventions_router)
+app.include_router(course_proposals_router)
+app.include_router(subject_proposals_router)
 
 app.add_middleware(
     CORSMiddleware,

@@ -17,6 +17,8 @@ from app.base import Base
 from app.models.student import Student
 from app.models.user import User
 from app.models.intervention import Intervention
+from app.models.course_proposal import CourseProposal
+from app.models.subject_proposal import SubjectProposal
 from app.database import normalize_database_url
 
 load_dotenv()

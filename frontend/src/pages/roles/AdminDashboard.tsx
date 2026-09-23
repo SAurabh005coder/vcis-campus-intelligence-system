@@ -31,8 +31,9 @@ import { AdminStudentDirectory } from "../../components/admin/AdminStudentDirect
 import { AdminFacultyDirectory } from "../../components/admin/AdminFacultyDirectory";
 import { AdminStudentReview } from "../../components/admin/AdminStudentReview";
 import { UserProvisionModal } from "../../components/admin/UserProvisionModal";
+import { AdminProposalManagement } from "../../components/admin/AdminProposalManagement";
 
-type AdminTab = "overview" | "users" | "students" | "faculty" | "interventions";
+type AdminTab = "overview" | "proposals" | "users" | "students" | "faculty" | "interventions";
 
 export const AdminDashboard: React.FC = () => {
   const { user } = useAuth();
@@ -255,6 +256,7 @@ export const AdminDashboard: React.FC = () => {
         <div className="vcis-tab-list" role="tablist" style={{ marginBottom: "var(--space-6)" }}>
           {[
             { id: "overview", label: "Overview & Structure" },
+            { id: "proposals", label: "Academic Proposals" },
             { id: "users", label: `User Accounts (${users.length})` },
             { id: "students", label: `Students (${students.length})` },
             { id: "faculty", label: `Faculty (${faculty.length})` },
@@ -284,6 +286,17 @@ export const AdminDashboard: React.FC = () => {
               subjects={subjects}
               students={students}
               faculty={faculty}
+            />
+          </div>
+        )}
+
+        {/* Tab: Academic Proposals Dedicated View */}
+        {activeTab === "proposals" && (
+          <div>
+            <AdminProposalManagement
+              departments={departments}
+              courses={courses}
+              onProposalApproved={() => loadInitialData()}
             />
           </div>
         )}

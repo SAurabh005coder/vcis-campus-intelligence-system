@@ -28,6 +28,7 @@ import { PredictionStatusOverview } from "../../components/hod/PredictionStatusO
 import { HodStudentTable } from "../../components/hod/HodStudentTable";
 import { HodStudentReview } from "../../components/hod/HodStudentReview";
 import { HodInterventionModal } from "../../components/hod/HodInterventionModal";
+import { AcademicPlanning } from "../../components/hod/AcademicPlanning";
 
 export const HodDashboard: React.FC = () => {
   const { user } = useAuth();
@@ -310,6 +311,14 @@ export const HodDashboard: React.FC = () => {
                 students={students}
                 courses={courses}
                 departmentId={hod.department_id}
+              />
+            )}
+
+            {/* Academic Governance & Planning (Course / Subject Proposals) */}
+            {hod?.department_id && (
+              <AcademicPlanning
+                departmentInfo={departmentInfo}
+                courses={courses}
               />
             )}
 
